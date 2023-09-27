@@ -18,6 +18,7 @@
         <div :class="`bg bg-${pokemon(pokeId).type}`">
           <img
             class="poke-img"
+            draggable="false"
             :src="`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${
               pokemon(pokeId).idString
             }.png`"

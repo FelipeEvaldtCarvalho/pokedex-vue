@@ -4,6 +4,7 @@
     :class="`poke-card poke-card-${pokemon.type}`"
   >
     <img
+      draggable="false"
       :src="`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemon.idString}.png`"
       :alt="`${info.name}-image`"
     />
