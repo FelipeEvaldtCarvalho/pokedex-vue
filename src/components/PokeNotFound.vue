@@ -24,7 +24,7 @@ export default { name: "PokeNotFound" };
   &-content {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 0.5rem;
     align-items: center;
     width: auto;
     text-align: center;
@@ -32,6 +32,10 @@ export default { name: "PokeNotFound" };
     border-radius: 2rem;
     padding: 2rem;
     margin: 0 1rem;
+
+    h1 {
+      font-size: 2rem;
+    }
 
     button {
       border-radius: 1rem;
