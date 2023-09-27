@@ -1,18 +1,34 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <section>
+    <Transition name="fade" mode="out-in">
+      <pokeLoading v-if="load" />
+      <PokeError v-else-if="error && !load" />
+      <PokeList v-else />
+    </Transition>
+  </section>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import PokeError from "@/components/PokeError.vue";
+import PokeLoading from "@/components/PokeLoading.vue";
+import PokeList from "@/components/PokeList.vue";
+import { mapGetters } from "vuex";
 export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
+  name: "HomeView",
+  computed: {
+    ...mapGetters({
+      load: "getHomeLoading",
+      error: "getPokemonsError",
+    }),
+  },
+  components: { PokeError, PokeLoading, PokeList },
+};
 </script>
+
+<style lang="scss" scoped>
+section {
+  display: flex;
+  width: 100%;
+  min-height: calc(100vh - 115px);
+}
+</style>
