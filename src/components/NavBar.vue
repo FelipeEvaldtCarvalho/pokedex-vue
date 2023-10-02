@@ -93,7 +93,6 @@ nav {
 
     .cam-lens {
       background: black;
-
       width: 56px;
       height: 56px;
       position: relative;
@@ -118,8 +117,8 @@ nav {
 
       &:before {
         content: "";
-        width: 44px;
-        height: 44px;
+        width: 54px;
+        height: 54px;
         background: #50a3d9;
         border: 5px #50a3d9 solid;
         border-radius: 50%;

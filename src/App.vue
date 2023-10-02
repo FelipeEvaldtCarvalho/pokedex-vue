@@ -27,7 +27,9 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-
+p {
+  margin: 0;
+}
 body {
   min-height: 100vh;
 }

@@ -31,8 +31,8 @@ export default new Vuex.Store({
       try {
         const {
           data: { results },
-        } = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=15");
-        // } = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=493");
+          // } = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=15");
+        } = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=493");
         const pokemonList = [];
         results.forEach(async (pokemon) => {
           const pokeInfo = await getPokeCardInfo(pokemon);
