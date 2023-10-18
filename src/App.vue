@@ -1,12 +1,14 @@
 <template>
   <div id="app">
-    <NavBar></NavBar>
+    <NavBar />
     <router-view />
+    <poke-footer />
   </div>
 </template>
 <script>
 import { mapActions } from "vuex";
 import NavBar from "./components/NavBar.vue";
+import PokeFooter from "./components/PokeFooter.vue";
 export default {
   methods: {
     ...mapActions(["fetchPokemons"]),
@@ -14,7 +16,7 @@ export default {
   mounted() {
     this.fetchPokemons();
   },
-  components: { NavBar },
+  components: { NavBar, PokeFooter },
 };
 </script>
 

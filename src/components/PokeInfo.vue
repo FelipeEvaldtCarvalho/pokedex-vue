@@ -1,5 +1,5 @@
 <template>
-  <section class="poke-info">
+  <section v-if="pokemonData" class="poke-info">
     <div class="btn-container">
       <button class="btn-return" @click="$router.push('/')">
         <ion-icon name="chevron-back-outline"></ion-icon> Return
@@ -102,7 +102,7 @@ export default {
     },
     pokemonData() {
       const data = this.pokemon(this.pokeId);
-      return data || {};
+      return data;
     },
     HPBar() {
       const maxHP = this.pokemonData.stats[0].base_stat * 2 + 204;

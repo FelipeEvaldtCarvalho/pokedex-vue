@@ -1,8 +1,10 @@
 <template>
   <section class="poke-view">
-    <pokeLoading v-if="load" />
-    <PokeError v-else-if="error && !load" />
-    <PokeInfo v-else />
+    <Transition name="fade" mode="out-in">
+      <pokeLoading v-if="load" />
+      <PokeError v-else-if="error && !load" />
+      <PokeInfo v-else />
+    </Transition>
   </section>
 </template>
 
@@ -28,5 +30,6 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: 80vh;
 }
 </style>
