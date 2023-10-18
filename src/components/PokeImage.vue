@@ -47,6 +47,11 @@ export default {
   position: relative;
   border-radius: 0.2rem;
 
+  @media (min-width: 1000px) {
+    align-self: flex-start;
+    margin-top: 50px;
+  }
+
   &::after {
     content: "";
     width: calc(100% - 4px);

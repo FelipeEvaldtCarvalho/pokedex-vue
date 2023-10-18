@@ -23,6 +23,9 @@
         <PokeTypes :types="pokemonData.types" />
         <div class="about">
           <h3>About</h3>
+          <p class="description text-center mb-4">
+            {{ pokemonData.description || "Ecology under research." }}
+          </p>
           <div class="about-items">
             <div class="item about-weight">
               <p class="item-title">Weight</p>
@@ -51,13 +54,35 @@
               </div>
             </div>
           </div>
-          <div class="stats">
-            <div class="progress" role="progressbar">
-              <div class="progress-bar" style="width: 50%"></div>
-            </div>
-          </div>
         </div>
       </div>
+    </div>
+    <div
+      class="d-flex flex-column w-100 gap-3 align-items-center mt-4 stats-container"
+    >
+      <h3>Base Stats</h3>
+      <div class="stat" v-for="(stat, i) in pokemonData.stats" :key="i">
+        <div class="stat-text">
+          <p class="stat-text-name">{{ stat.stat.name }}</p>
+          <p>{{ stat.base_stat }}</p>
+        </div>
+        <span class="progressbar">
+          <div class="progress" role="progressbar">
+            <div
+              class="progress-bar"
+              :style="`width: ${
+                stat.stat.name.toUpperCase() == 'HP'
+                  ? HPBar
+                  : statBar(stat.base_stat)
+              }%`"
+            ></div>
+          </div>
+        </span>
+      </div>
+    </div>
+    <div class="d-flex flex-column w-100 gap-3 align-items-center mt-4">
+      <h3>Evolutions</h3>
+      <PokeEvolutions :evolutions="pokemonData.evolutions" />
     </div>
   </section>
 </template>
@@ -65,11 +90,11 @@
 <script>
 import { mapGetters } from "vuex";
 import PokeImage from "./PokeImage.vue";
+import PokeEvolutions from "./PokeEvolutions.vue";
 import PokeTypes from "./PokeTypes.vue";
 export default {
-  components: { PokeImage, PokeTypes },
+  components: { PokeImage, PokeTypes, PokeEvolutions },
   name: "PokeInfo",
-
   computed: {
     ...mapGetters({ pokemon: "getPokemon", listLength: "getPokemonsLength" }),
     pokeId() {
@@ -78,6 +103,11 @@ export default {
     pokemonData() {
       const data = this.pokemon(this.pokeId);
       return data || {};
+    },
+    HPBar() {
+      const maxHP = this.pokemonData.stats[0].base_stat * 2 + 204;
+      const baseHP = this.pokemonData.stats[0].base_stat;
+      return !maxHP ? 0 : (baseHP / maxHP) * 100;
     },
   },
   methods: {
@@ -90,6 +120,10 @@ export default {
       const nextNumber = parseInt(this.pokemonData.id) + 1;
       const nextPoke = nextNumber > this.listLength ? 1 : nextNumber;
       return this.$router.push(`/pokemon/${nextPoke}`);
+    },
+    statBar(baseStat) {
+      const maxStat = (baseStat * 2 + 99) * 1.1;
+      return !maxStat ? 0 : (baseStat / maxStat) * 100;
     },
   },
 };
@@ -167,16 +201,34 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  max-width: 1000px;
+  margin: auto;
+
+  @media (min-width: 1000px) {
+    flex-direction: row;
+    margin-top: 150px;
+    min-width: 1000px;
+  }
 
   .info-text {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+
+    @media (min-width: 1000px) {
+      width: 100%;
+    }
     .intro-info {
       display: flex;
       flex-direction: column;
       text-align: center;
       text-transform: capitalize;
+
+      @media (min-width: 1000px) {
+        flex-direction: row;
+        justify-content: center;
+        gap: 2rem;
+      }
 
       .poke-code {
         color: gray;
@@ -189,6 +241,14 @@ export default {
       align-items: center;
       gap: 1rem;
       width: 100%;
+
+      .description {
+        font-size: 1.1rem;
+
+        @media (min-width: 1000px) {
+          font-size: 1.4rem;
+        }
+      }
 
       &-items {
         display: flex;
@@ -207,12 +267,20 @@ export default {
 
           .material-icons {
             font-size: 16px;
+
+            @media (min-width: 1000px) {
+              font-size: 22px;
+            }
           }
 
           &-title {
             font-size: 16px;
             color: gray;
             font-weight: 600;
+
+            @media (min-width: 1000px) {
+              font-size: 20px;
+            }
           }
 
           &-info {
@@ -220,6 +288,10 @@ export default {
             align-items: center;
             gap: 0.1rem;
             font-size: 14px;
+
+            @media (min-width: 1000px) {
+              font-size: 18px;
+            }
           }
 
           .moves-container {
@@ -236,9 +308,39 @@ export default {
         }
       }
     }
+  }
+}
+.stats-container {
+  max-width: 1000px;
+  margin: auto;
+  .stat {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 
-    .stats {
-      width: 100%;
+    &-text {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      width: 120px;
+      justify-content: end;
+
+      &-name {
+        text-align: right;
+        text-transform: capitalize;
+        font-weight: 600;
+        color: gray;
+      }
+    }
+    .progressbar {
+      flex-grow: 1;
+    }
+    .progress {
+      border: 1px solid black;
+    }
+    .progress-bar {
+      background-color: #27aafe;
     }
   }
 }
