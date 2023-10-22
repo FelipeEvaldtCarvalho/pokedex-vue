@@ -27,20 +27,19 @@ export default new Vuex.Store({
   actions: {
     fetchPokemons: async ({ commit }) => {
       commit("setHomeLoading", true);
-
       try {
         const {
           data: { results },
-          // } = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=55");
         } = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=1010");
-        const pokemonList = [];
-        results.forEach(async (pokemon) => {
-          const pokeInfo = await getPokeCardInfo(pokemon);
-          pokemonList.push(pokeInfo);
-        });
+        const pokemonList = await Promise.all(
+          results.map(async (pokemon) => {
+            return await getPokeCardInfo(pokemon);
+          })
+        );
         commit("setPokemons", pokemonList);
         commit("setPokemonsError", false);
       } catch (error) {
+        console.error(error);
         commit("setPokemonsError", true);
       } finally {
         commit("setHomeLoading", false);

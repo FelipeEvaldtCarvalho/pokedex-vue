@@ -1,5 +1,5 @@
 <template>
-  <section class="poke-view">
+  <section :class="`poke-view ${load ? 'loading' : ''}`">
     <Transition name="fade" mode="out-in">
       <pokeLoading v-if="load" />
       <PokeError v-else-if="error && !load" />
@@ -31,5 +31,10 @@ export default {
   flex-direction: column;
   width: 100%;
   min-height: 80vh;
+
+  &.loading {
+    flex-direction: row !important;
+    align-items: center;
+  }
 }
 </style>
