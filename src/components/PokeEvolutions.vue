@@ -1,10 +1,7 @@
 <template>
   <div class="poke-evolutions" v-if="evolutions">
     <div class="evolutions" v-for="(pokemon, index) in evolutions" :key="index">
-      <div
-        class="img-container"
-        @click="$router.push(`/pokemon/${pokemon.id}`)"
-      >
+      <div class="img-container" @click="selectPokemon(pokemon)">
         <img
           draggable="false"
           :src="`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${formatId(
@@ -35,6 +32,13 @@ export default {
   },
   methods: {
     formatId,
+    selectPokemon(pokemon) {
+      if (this.$route.params.id == pokemon.id) {
+        return window.scrollTo(0, 0);
+      }
+      this.$router.push(`/pokemon/${pokemon.id}`);
+      return window.scrollTo(0, 0);
+    },
   },
 };
 </script>
