@@ -12,11 +12,6 @@ import PokeFooter from "./components/PokeFooter.vue";
 export default {
   methods: {
     ...mapActions(["fetchPokemons"]),
-    checkRouteOnMount() {
-      if (this.$route.path != "/") {
-        this.$router.push({ path: "/" });
-      }
-    },
   },
   mounted() {
     this.fetchPokemons();

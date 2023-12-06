@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import PokeView from "../views/PokeView.vue";
+import store from "@/store";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,14 @@ const routes = [
     path: "/pokemon/:id",
     name: "pokemon",
     component: PokeView,
+    beforeEnter(to, from, next) {
+      if (!store.getters.getPokemons.length) {
+        next({
+          path: "/",
+        });
+      }
+      next();
+    },
   },
 ];
 

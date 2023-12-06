@@ -324,7 +324,7 @@ export default {
       gap: 1.5rem;
       align-items: center;
       width: 120px;
-      justify-content: end;
+      justify-content: flex-end;
 
       &-name {
         text-align: right;
